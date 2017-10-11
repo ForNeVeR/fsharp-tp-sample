@@ -4,13 +4,14 @@ open ProviderImplementation
 open ProviderImplementation.ProvidedTypes
 open Microsoft.FSharp.Core.CompilerServices
 open System.Reflection
+open System.IO
 
 [<TypeProvider>]
 type BasicProvider (config : TypeProviderConfig) as this =
     inherit TypeProviderForNamespaces ()
 
     let ns = "StaticProperty.Provided"
-    let asm = Assembly.GetExecutingAssembly()
+    let asm = Assembly.LoadFrom(config.RuntimeAssembly)
     let ctxt = ProvidedTypesContext.Create(config, isForGenerated=true)
 
     let createTypes () =
@@ -20,7 +21,11 @@ type BasicProvider (config : TypeProviderConfig) as this =
         [myType]
 
     do
-        this.AddNamespace(ns, createTypes())
+        let types = createTypes()
+        let assemblyName = Path.ChangeExtension(Path.GetTempFileName(), ".dll")
+        let pa = ProvidedAssembly(assemblyName)
+        pa.AddTypes types
+        this.AddNamespace(ns, types)
 
 [<assembly:TypeProviderAssembly>]
 do ()
