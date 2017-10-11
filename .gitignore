@@ -1,0 +1,6 @@
+/.idea/
+/.paket/*.exe
+/paket-files/
+
+bin/
+obj/

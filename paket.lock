@@ -1,0 +1,6 @@
+STORAGE: NONE
+GITHUB
+  remote: fsprojects/FSharp.TypeProviders.SDK
+    src/ProvidedTypes.fs (36c892674c276265f2c028b8a2e36a99445acb3e)
+    src/ProvidedTypes.fsi (36c892674c276265f2c028b8a2e36a99445acb3e)
+    src/ProvidedTypesTesting.fs (36c892674c276265f2c028b8a2e36a99445acb3e)
